@@ -1,3 +1,7 @@
+# Python.io Game
+# Made by MysteryCoder456 / Rehatbir Singh
+# GNU GENERAL PUBLIC LICENSE in LICENSE file
+
 from uni_vars import *
 from snake import Snake
 from segment import Segment
