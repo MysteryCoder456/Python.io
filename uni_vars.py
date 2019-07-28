@@ -2,7 +2,7 @@ import pygame
 
 # width and height of pygame window are set to 500, 500 
 width, height = 1200, 700
-title = "Slither"
+title = "Python.io"
 # background is set to black by default, pygame interprets color in RGB (red, green, blue) values
 background = (0, 0, 0)
 
