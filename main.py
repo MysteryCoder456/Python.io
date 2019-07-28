@@ -27,8 +27,8 @@ class Game:
 			self.food.append(f)
 
 	def logic(self):
-		if self.frame_count % 5000 == 0:
-			for i in range(self.min_food_count * 2):
+		if self.frame_count % 1000 == 0:
+			for i in range(randint(self.min_food_count * 2, self.min_food_count * 5)):
 				if len(self.food) < self.min_food_count:
 					x = randint(0, width - 10) + 5
 					y = randint(0, height - 10) + 5
@@ -36,8 +36,8 @@ class Game:
 					f = Food(x, y, (r, b, g))
 					self.food.append(f)
 
-		mouse_x = pygame.mouse.get_pos()[0]
-		mouse_y = pygame.mouse.get_pos()[1]
+		# mouse_x = pygame.mouse.get_pos()[0]
+		# mouse_y = pygame.mouse.get_pos()[1]
 
 		keys = pygame.key.get_pressed()
 		left = keys[pygame.K_LEFT]
