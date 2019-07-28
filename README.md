@@ -1,6 +1,9 @@
 # Python.io
 Snake game inspired from Slither.io but features a python instead of a Snake. Made in Python 3
 
+# Issues
+If you encounter any bugs or issues with the game please tell me. I will be more than happy to listen.
+
 # How to play
 To play this game follow these steps:
   1. Install the Python 3 Interpreter from https://www.python.org/.
