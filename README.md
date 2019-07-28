@@ -11,7 +11,7 @@ To play this game follow these steps:
 If you get any errors please just copy paste the error into google and press enter.
 
 # System Requirements
-Processors: Intel Atom® processor or Intel® Core™ i3 processor.
-Disk Space: 2 GB or more.
-Operating systems: Windows 7 or later, macOS, and Linux.
-Display Size: 1200 x 700 pixels.
+  Processors: Intel Atom® processor or Intel® Core™ i3 processor.
+  Disk Space: 2 GB or more.
+  Operating systems: Windows 7 or later, macOS, and Linux.
+  Display Size: 1200 x 700 pixels.
