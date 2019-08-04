@@ -6,9 +6,40 @@ from uni_vars import *
 from snake import Snake
 from segment import Segment
 from food import Food
-import pygame
 from random import randint
+import pygame
 import math
+
+# Import kivy deps
+import kivy
+from kivy.app import App
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+
+
+#========================================================================================================#
+#=========================================== Menu Starts Here ===========================================#
+#========================================================================================================#
+
+
+class MyGrid(GridLayout):
+	def __init__(self, **kwargs):
+		super(MyGrid, self).__init__(**kwargs)
+
+		self.cols = 1
+
+		self.add_widget(Label(text="hello"))
+
+
+class Menu(App):
+	def build(self):
+		return MyGrid()
+
+
+#========================================================================================================#
+#=========================================== Game Starts Here ===========================================#
+#========================================================================================================#
 
 
 class Game:
@@ -225,6 +256,9 @@ class Game:
 
 # !!! - DO NOT MODIFY THE BELOW CODE IN ANYWAY - !!! #
 
+def main_menu():
+	Menu().run()
+
 
 def main():
 	global running
@@ -248,6 +282,7 @@ def main():
 		
 		
 if __name__ == "__main__":
+	main_menu()
 	main()
 	pygame.quit()
 	quit()
