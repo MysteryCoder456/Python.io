@@ -97,7 +97,8 @@ class Game:
 
 		# Stop game if player touches edges
 		if self.collision_edges(self.player.head.x, self.player.head.y, self.player.head.size):
-			self.running = False
+			global running
+			running = False
 
 		# Add a segment to player's tail if the player touches food
 		for food in self.food:

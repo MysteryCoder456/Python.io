@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 from uni_vars import win, width, height
 pygame.font.init()
 
@@ -39,8 +40,9 @@ class Button:
 class Menu:
 	def __init__(self):
 		self.title_size = 100
-		self.title_color = (255, 255, 255)
-		self.title_pos = (width/2-self.title_size*1.5, 200)
+		self.title_color = [255, 255, 255]
+		self.title_pos = (width/2-self.title_size*1.6, 200)
+		self.timer = 0
 		self.running = True
 		self.btn_width = 250
 		self.btn_height = 125
@@ -62,6 +64,13 @@ class Menu:
 		win.blit(screen_text, position)
 
 	def logic(self):
+		self.timer += 1
+
+		if self.timer % 10 == 0:
+			self.title_color[0] = randint(0, 255)
+			self.title_color[1] = randint(0, 255)
+			self.title_color[2] = randint(0, 255)
+
 		if self.play_button.clicked():
 			self.running = False
 
@@ -72,7 +81,7 @@ class Menu:
 				self.show_controls = True
 
 	def render(self):
-		self.message("Welcome to", 30, (255, 255, 255), (width/2-30*2, self.title_pos[1]-50))
+		self.message("Welcome to", 40, (255, 255, 255), (width/2-40*2.1, self.title_pos[1]-50))
 		self.message("Python.io", self.title_size, self.title_color, self.title_pos)
 
 		self.play_button.render()
