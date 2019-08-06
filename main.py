@@ -2,13 +2,19 @@
 # Made by MysteryCoder456 / Rehatbir Singh
 # GNU GENERAL PUBLIC LICENSE in LICENSE file
 
-from uni_vars import *
 from snake import Snake
 from segment import Segment
 from food import Food
-import pygame
+from menu import Menu
+from uni_vars import *
 from random import randint
+import pygame
 import math
+
+
+#========================================================================================================#
+#=========================================== Game Starts Here ===========================================#
+#========================================================================================================#
 
 
 class Game:
@@ -91,8 +97,7 @@ class Game:
 
 		# Stop game if player touches edges
 		if self.collision_edges(self.player.head.x, self.player.head.y, self.player.head.size):
-			global running
-			running = False
+			self.running = False
 
 		# Add a segment to player's tail if the player touches food
 		for food in self.food:
@@ -226,9 +231,28 @@ class Game:
 # !!! - DO NOT MODIFY THE BELOW CODE IN ANYWAY - !!! #
 
 
+def menu():
+	main_menu = Menu()
+
+	while main_menu.running:
+		clock.tick(60)
+
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				global running
+				main_menu.running = False
+				running = False
+
+		main_menu.logic()
+		win.fill(background)
+		main_menu.render()
+		pygame.display.update()
+
+
+
 def main():
 	global running
-	
+
 	game = Game()
 
 	game.start()
@@ -248,6 +272,7 @@ def main():
 		
 		
 if __name__ == "__main__":
+	menu()
 	main()
 	pygame.quit()
 	quit()
