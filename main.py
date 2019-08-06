@@ -2,7 +2,6 @@
 # Made by MysteryCoder456 / Rehatbir Singh
 # GNU GENERAL PUBLIC LICENSE in LICENSE file
 
-from uni_vars import *
 from snake import Snake
 from segment import Segment
 from food import Food
@@ -25,7 +24,11 @@ from kivy.uix.widget import Widget
 
 
 class MyGrid(Widget):
-	pass
+	# play = 
+
+	def game(self):
+		Menu.stop()
+		main()
 
 
 class Menu(App):
@@ -39,16 +42,35 @@ class Menu(App):
 
 
 class Game:
+	def __init__(self):
+		# width and height of pygame window are set to 500, 500 
+		self.width, self.height = 1200, 700
+		self.title = "Python.io"
+		# background is set to black by default, pygame interprets color in RGB (red, green, blue) values
+		self.background = (0, 0, 0)
+
+		self.clock = pygame.time.Clock()
+		self.running = True
+
+		# initializing main pygame window
+		self.win = pygame.display.set_mode((self.width, self.height))
+		pygame.display.set_caption(self.title)
+
+
+
+
+
+
 	def start(self):
 		# self.seg = Segment(100, 100, 20, (140, 0, 0))
-		self.player = Snake(width / 2, height / 2, 20, (255, 0, 0), 2)
+		self.player = Snake(self.width / 2, self.height / 2, 20, (255, 0, 0), 2)
 		self.food = []
 		self.min_food_count = 25
 		self.frame_count = 0
 
 		for i in range(50):
-			x = randint(0, width - 10) + 5
-			y = randint(0, height - 10) + 5
+			x = randint(0, self.width - 10) + 5
+			y = randint(0, self.height - 10) + 5
 			r, g, b = randint(0, 255), randint(0, 255), randint(0, 255)
 			f = Food(x, y, (r, b, g))
 			self.food.append(f)
@@ -57,8 +79,8 @@ class Game:
 		if self.frame_count % 1000 == 0:
 			for i in range(randint(self.min_food_count * 2, self.min_food_count * 5)):
 				if len(self.food) < self.min_food_count:
-					x = randint(0, width - 10) + 5
-					y = randint(0, height - 10) + 5
+					x = randint(0, self.width - 10) + 5
+					y = randint(0, self.height - 10) + 5
 					r, g, b = randint(0, 255), randint(0, 255), randint(0, 255)
 					f = Food(x, y, (r, b, g))
 					self.food.append(f)
@@ -118,8 +140,7 @@ class Game:
 
 		# Stop game if player touches edges
 		if self.collision_edges(self.player.head.x, self.player.head.y, self.player.head.size):
-			global running
-			running = False
+			self.running = False
 
 		# Add a segment to player's tail if the player touches food
 		for food in self.food:
@@ -206,12 +227,12 @@ class Game:
 	def collision_edges(self, x, y, r):
 		if x - r < 0:
 			return True
-		if x + r > width:
+		if x + r > self.width:
 			return True
 		
 		if y - r < 0:
 			return True
-		if y + r > height:
+		if y + r > self.height:
 			return True
 
 
@@ -252,29 +273,28 @@ class Game:
 
 # !!! - DO NOT MODIFY THE BELOW CODE IN ANYWAY - !!! #
 
-def main_menu():
-	Menu().run()
-
 
 def main():
-	global running
-	
 	game = Game()
 
 	game.start()
 	
-	while running:
+	while game.running:
 		# clock.tick() takes parameter than specifies the fps that you game should run at
-		clock.tick(60)
+		game.clock.tick(60)
 		
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
-				running = False
+				game.running = False
 				
 		game.logic()
-		win.fill(background)
+		game.win.fill(game.background)
 		game.render()
 		pygame.display.update()
+
+
+def main_menu():
+	Menu().run()
 		
 		
 if __name__ == "__main__":
