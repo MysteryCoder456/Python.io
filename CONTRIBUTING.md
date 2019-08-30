@@ -1,1 +1,3 @@
-Please do not contribute to this project. Any and all pull requests will be denied. This is a solo developer project.
+# CONTRIBUTING
+
+Feel free to contribute in any way you can, whether it's motivating other or making actual pull requests.
