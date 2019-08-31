@@ -71,7 +71,7 @@ class Game:
 		# Boost if "up" arrow key or "w" key is held
 		chance = 5000
 
-		if up:
+		if w:
 			if len(self.p1.tail) > 7:
 				# Chance of p1 losing a segment of tail if they boost
 				if randint(0, 100000) < chance:
@@ -81,7 +81,7 @@ class Game:
 		else:
 			self.p1.speed = 2
 
-		if w:
+		if up:
 			if len(self.p2.tail) > 7:
 				# Chance of p2 losing a segment of tail if they boost
 				if randint(0, 100000) < chance:
