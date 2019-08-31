@@ -4,11 +4,11 @@ Snake game inspired from Slither.io but features a python instead of a Snake. Ma
 
 ## Nice bro
 
-I didnt realise I'd get even a little attention(633 view, thats the most I've gotten on the internet) from people on Reddit and other sources since I'm just some stupid teenager tryna make some use of my time. Thanks for even looking at my stuff. So, I guess I'll "mend" the CONTRIBUTING.md file.
+I didnt realise I'd get even a little attention(700+ views, thats the most I've gotten on the internet) from people on Reddit and other sources since I'm just some stupid teenager tryna make some use of my time. Thanks for even looking at my stuff. So, I guess I'll "mend" the CONTRIBUTING.md file.
 
-## Singleplayer
+## Multiplayer (in development)
 
-Please go to the master branch to play Singleplayer mode.
+Please go to the multiplayer branch to play Multiplayer mode.
 
 ## System Requirements
 
