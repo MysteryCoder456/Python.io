@@ -48,7 +48,7 @@ class Menu:
 		self.btn_height = 125
 		self.play_button = Button(win, width / 2 - self.btn_width / 2, height / 2,
                          self.btn_width, self.btn_height,
-                         text='Single Player', text_size=47)
+                         text='Multiplayer', text_size=55)
 
 		self.controls_button = Button(win, width / 2 - self.btn_width / 2, height / 2 + 150,
                          self.btn_width, self.btn_height,
@@ -88,4 +88,5 @@ class Menu:
 		self.controls_button.render()
 
 		if self.show_controls:
-			self.message("Single Player: Arrow keys", 30, (255, 255, 255), (width/2-500, height/2))
+			self.message("Player1: WASD keys", 30, (255, 255, 255), (width/2-500, height/2))
+			self.message("Player2: Arrow keys", 30, (255, 255, 255), (width/2+300, height/2))

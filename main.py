@@ -20,8 +20,8 @@ import math
 class Game:
 	def start(self):
 		# self.seg = Segment(100, 100, 20, (140, 0, 0))
-		self.p1 = Snake(width/4, height / 2, 20, (0, 255, 0), 2)
-		self.p2 = Snake(width/4*3, height / 2, 20, (0, 0, 255), 2)
+		self.p1 = Snake(width/4, height / 2, 20, (255, 0, 0), 2)
+		self.p2 = Snake(width/4*3, height / 2, 20, (0, 255, 0), 2)
 		self.food = []
 		self.min_food_count = 25
 		self.frame_count = 0
@@ -58,14 +58,14 @@ class Game:
 		d = keys[pygame.K_d]
 		turn_speed = math.pi / 80
 
-		if left:
+		if a:
 			self.p1.head.angle -= turn_speed
-		if right:
+		if d:
 			self.p1.head.angle += turn_speed
 
-		if a:
+		if left:
 			self.p2.head.angle -= turn_speed
-		if d:
+		if right:
 			self.p2.head.angle += turn_speed
 
 		# Boost if "up" arrow key or "w" key is held

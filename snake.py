@@ -26,8 +26,12 @@ class Snake:
 		if len(self.tail) > self.maximum_tail_size:
 			self.tail.pop()
 
-		for i in range(len(self.tail)):
-			self.tail[i].color = (255 - i * (255 / len(self.tail)), 0, 0)
+		if self.color == (255, 0, 0):
+			for i in range(len(self.tail)):
+				self.tail[i].color = (255 - i * (255 / len(self.tail)), 0, 0)
+		if self.color == (0, 255, 0):
+			for i in range(len(self.tail)):
+				self.tail[i].color = (0, 255 - i * (255 / len(self.tail)), 0)
 
 		self.head.update()
 
