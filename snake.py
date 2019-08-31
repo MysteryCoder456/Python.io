@@ -5,7 +5,7 @@ class Snake:
 	def __init__(self, x, y, seg_size, color, speed):
 		self.seg_size = seg_size
 		self.color = color
-		self.head = Segment(x, y, self.seg_size, self.color)
+		self.head = Segment(x, y, self.seg_size, color)
 		self.tail = []
 		self.speed = speed
 		self.maximum_tail_size = 70

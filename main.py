@@ -20,7 +20,8 @@ import math
 class Game:
 	def start(self):
 		# self.seg = Segment(100, 100, 20, (140, 0, 0))
-		self.player = Snake(width / 2, height / 2, 20, (255, 0, 0), 2)
+		self.p1 = Snake(width/4, height / 2, 20, (0, 255, 0), 2)
+		self.p2 = Snake(width/4*3, height / 2, 20, (0, 0, 255), 2)
 		self.food = []
 		self.min_food_count = 25
 		self.frame_count = 0
@@ -33,6 +34,9 @@ class Game:
 			self.food.append(f)
 
 	def logic(self):
+		# for seg in self.p2.tail:
+		# 	seg.color = (0, 255, 0)
+
 		if self.frame_count % 1000 == 0:
 			for i in range(randint(self.min_food_count * 2, self.min_food_count * 5)):
 				if len(self.food) < self.min_food_count:
@@ -49,24 +53,43 @@ class Game:
 		left = keys[pygame.K_LEFT]
 		right = keys[pygame.K_RIGHT]
 		up = keys[pygame.K_UP]
+		w = keys[pygame.K_w]
+		a = keys[pygame.K_a]
+		d = keys[pygame.K_d]
 		turn_speed = math.pi / 80
 
 		if left:
-			self.player.head.angle -= turn_speed
+			self.p1.head.angle -= turn_speed
 		if right:
-			self.player.head.angle += turn_speed
+			self.p1.head.angle += turn_speed
 
-		# Boost if "up" arrow key is held
+		if a:
+			self.p2.head.angle -= turn_speed
+		if d:
+			self.p2.head.angle += turn_speed
+
+		# Boost if "up" arrow key or "w" key is held
+		chance = 5000
+
 		if up:
-			if len(self.player.tail) > 7:
-				# Chance of player losing a segment of tail if they boost
-				chance = 5000
+			if len(self.p1.tail) > 7:
+				# Chance of p1 losing a segment of tail if they boost
 				if randint(0, 100000) < chance:
-					self.player.tail.pop()
+					self.p1.tail.pop()
 
-				self.player.speed = 4
+				self.p1.speed = 4
 		else:
-			self.player.speed = 2
+			self.p1.speed = 2
+
+		if w:
+			if len(self.p2.tail) > 7:
+				# Chance of p2 losing a segment of tail if they boost
+				if randint(0, 100000) < chance:
+					self.p2.tail.pop()
+
+				self.p2.speed = 4
+		else:
+			self.p2.speed = 2
 
 		# dx = mouse_x - self.seg.x
 		# dy = mouse_y - self.seg.y
@@ -76,63 +99,100 @@ class Game:
 		# self.seg.update()
 
 		# Make the snake follow the mouse
-		# dx = mouse_x - self.player.head.x
-		# dy = mouse_y - self.player.head.y
+		# dx = mouse_x - self.p1.head.x
+		# dy = mouse_y - self.p1.head.y
 		# new_angle = math.atan2(dy, dx)
-		# self.player.head.angle = new_angle
-		self.player.head.speed = self.player.speed
+		# self.p1.head.angle = new_angle
+		self.p1.head.speed = self.p1.speed
+		self.p2.head.speed = self.p2.speed
 
 		# Slithering effect
-		for i in range(len(self.player.tail)):
+		for i in range(len(self.p1.tail)):
 			if i == 0:
-				dx = self.player.head.x - self.player.tail[i].x
-				dy = self.player.head.y - self.player.tail[i].y
+				dx = self.p1.head.x - self.p1.tail[i].x
+				dy = self.p1.head.y - self.p1.tail[i].y
 			else:
-				dx = self.player.tail[i-1].x - self.player.tail[i].x
-				dy = self.player.tail[i-1].y - self.player.tail[i].y
+				dx = self.p1.tail[i-1].x - self.p1.tail[i].x
+				dy = self.p1.tail[i-1].y - self.p1.tail[i].y
 
 			new_angle = math.atan2(dy, dx)
-			self.player.tail[i].angle = new_angle
-			self.player.tail[i].speed = self.player.speed
+			self.p1.tail[i].angle = new_angle
+			self.p1.tail[i].speed = self.p1.speed
 
-		# Stop game if player touches edges
-		if self.collision_edges(self.player.head.x, self.player.head.y, self.player.head.size):
-			global running
+		for i in range(len(self.p2.tail)):
+			if i == 0:
+				dx = self.p2.head.x - self.p2.tail[i].x
+				dy = self.p2.head.y - self.p2.tail[i].y
+			else:
+				dx = self.p2.tail[i-1].x - self.p2.tail[i].x
+				dy = self.p2.tail[i-1].y - self.p2.tail[i].y
+
+			new_angle = math.atan2(dy, dx)
+			self.p2.tail[i].angle = new_angle
+			self.p2.tail[i].speed = self.p2.speed
+
+		# Stop game if a snake touches edges
+		global running
+		if self.collision_edges(self.p1.head.x, self.p1.head.y, self.p1.head.size):
 			running = False
+			print("GREEN WINS!")
 
-		# Add a segment to player's tail if the player touches food
+		if self.collision_edges(self.p2.head.x, self.p2.head.y, self.p2.head.size):
+			running = False
+			print("RED WINS!")
+
+		# Add a segment to a snake's tail if the it touches food
 		for food in self.food:
+			food_eaten = False
+
 			if self.collision_circle(
 									food.x, food.y, food.size,
-									self.player.head.x, self.player.head.y, self.player.head.size
+									self.p1.head.x, self.p1.head.y, self.p1.head.size
 									):
 				seg = Segment(
-								self.player.tail[len(self.player.tail)-1].x,
-								self.player.tail[len(self.player.tail)-1].y,
-								self.player.seg_size,
-								self.player.color
+								self.p1.tail[len(self.p1.tail)-1].x,
+								self.p1.tail[len(self.p1.tail)-1].y,
+								self.p1.seg_size,
+								self.p1.color
 							)
-				self.player.tail.append(seg)
+				self.p1.tail.append(seg)
+				food_eaten = True
+
+			if self.collision_circle(
+									food.x, food.y, food.size,
+									self.p2.head.x, self.p2.head.y, self.p2.head.size
+									):
+				seg = Segment(
+								self.p2.tail[len(self.p2.tail)-1].x,
+								self.p2.tail[len(self.p2.tail)-1].y,
+								self.p2.seg_size,
+								self.p2.color
+							)
+				self.p2.tail.append(seg)
+				food_eaten = True
+
+			if food_eaten:
 				self.food.remove(food)
 
 		# Stop snake if it touches the mouse
 		# if self.collision_circle(
 		# 							mouse_x, mouse_y, -5,
-		# 							self.player.head.x, self.player.head.y, self.player.head.size
+		# 							self.p1.head.x, self.p1.head.y, self.p1.head.size
 		# 						):
-		# 	self.player.head.speed = 0
+		# 	self.p1.head.speed = 0
 
-		# 	for seg in self.player.tail:
+		# 	for seg in self.p1.tail:
 		# 		seg.speed = 0
 
 		# Limit distance between each tail segment
-		for i in range(len(self.player.tail)):
-			tail = self.player.tail
-			limit = 12
+		limit = 12
+
+		for i in range(len(self.p1.tail)):
+			tail = self.p1.tail
 			if i == 0:
-				x1 = self.player.head.x
-				y1 = self.player.head.y
-				r1 = self.player.head.size - limit
+				x1 = self.p1.head.x
+				y1 = self.p1.head.y
+				r1 = self.p1.head.size - limit
 				x2 = tail[i].x
 				y2 = tail[i].y
 				r2 = tail[i].size - limit
@@ -147,8 +207,31 @@ class Game:
 			if self.collision_circle(x1, y1, r1, x2, y2, r2):
 				tail[i].speed = 0
 
-		# Update player's variables
-		self.player.update()
+		for i in range(len(self.p2.tail)):
+			tail = self.p2.tail
+			if i == 0:
+				x1 = self.p2.head.x
+				y1 = self.p2.head.y
+				r1 = self.p2.head.size - limit
+				x2 = tail[i].x
+				y2 = tail[i].y
+				r2 = tail[i].size - limit
+			else:
+				x1 = tail[i-1].x
+				y1 = tail[i-1].y
+				r1 = tail[i-1].size - limit
+				x2 = tail[i].x
+				y2 = tail[i].y
+				r2 = tail[i].size - limit
+
+			if self.collision_circle(x1, y1, r1, x2, y2, r2):
+				tail[i].speed = 0
+
+		# Update p1's variables
+		self.p1.update()
+
+		# Update p2's variables
+		self.p2.update()
 		
 		self.frame_count += 1
 		
@@ -158,7 +241,8 @@ class Game:
 		for food in self.food:
 			food.render()
 
-		self.player.render()
+		self.p1.render()
+		self.p2.render()
 
 
 
