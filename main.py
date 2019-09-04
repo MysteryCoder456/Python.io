@@ -227,6 +227,27 @@ class Game:
 			if self.collision_circle(x1, y1, r1, x2, y2, r2):
 				tail[i].speed = 0
 
+		# Check for collision between p1's head and p2's tail and vice versa
+		for seg1 in self.p1.tail:
+			for seg2 in self.p2.tail:
+				# p1
+				x = self.p1.head.x
+				y = self.p1.head.y
+				r = self.p1.head.size
+
+				if self.collision_circle(x, y, r, seg2.x, seg2.y, seg2.size):
+					print("GREEN WINS!")
+					running = False
+
+				# p2
+				x = self.p2.head.x
+				y = self.p2.head.y
+				r = self.p2.head.size
+				
+				if self.collision_circle(x, y, r, seg1.x, seg1.y, seg1.size):
+					print("RED WINS!")
+					running = False			
+
 		# Update p1's variables
 		self.p1.update()
 
