@@ -12,7 +12,7 @@ To install this game follow these steps:
 
   1. Install the Python 3 Interpreter from [here](https://www.python.org/).
   2. Clone the repo.
-  3. Run `python3 -m venv env` to create a new virtual environment and do `source env/bin/activate` on Mac and Linux. For windows, run the `env/ScriptActivate.ps1` script.
+  3. Run `python3 -m venv env` to create a new virtual environment and do `source env/bin/activate` on Mac and Linux. For windows, run the `env/Scripts/Activate.ps1` script.
   4. Run `pip install -r requirements.txt`.
   5. Run `python run.py` to finally start the game.
 
