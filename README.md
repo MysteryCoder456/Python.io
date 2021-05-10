@@ -1,13 +1,7 @@
 # Python.io
-
 Snake game inspired from Slither.io but features a python instead of a Snake. Made in Python 3
 
-## Multiplayer
-
-Please go to the multiplayer branch to play Multiplayer mode.
-
 ## Installation
-
 To install this game follow these steps:
 
   1. Install the Python 3 Interpreter from [here](https://www.python.org/).
@@ -17,7 +11,6 @@ To install this game follow these steps:
   5. Run `python run.py` to finally start the game.
 
 ## How to play
-
 The controls are simple: left and right arrow keys for turning and up arrow key for boosting.
 You have to collect food and grow longer and longer. If you touch the edges, another player's
 tail, you die!
