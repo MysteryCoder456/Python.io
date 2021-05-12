@@ -1,5 +1,3 @@
-from typing import Union
-
 import pygame
 import pygame.gfxdraw
 from pygame import Vector2 as vec2
