@@ -1,6 +1,7 @@
 import socket
 import threading
 import pickle
+from typing import Optional, Any
 
 
 class ClientInterface:
@@ -16,8 +17,14 @@ class ClientInterface:
         self.listen_thread = threading.Thread(target=self.listen, daemon=True)
         self.listen_thread.start()
 
-    def pop_first_msg(self):
-        return self.incoming_msg_queue.pop(0)
+    def queue_empty(self) -> bool:
+        return self.incoming_msg_queue == []
+
+    def pop_first_msg(self) -> Optional[Any]:
+        try:
+            return self.incoming_msg_queue.pop(0)
+        except IndexError:
+            pass
 
     def listen(self):
         buffer_size = 4096

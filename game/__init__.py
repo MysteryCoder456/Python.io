@@ -1,6 +1,7 @@
 import pygame
 from pygame import Vector2 as vec2
 
+from game.client import ClientInterface
 from game.snake import Snake
 
 
@@ -18,6 +19,7 @@ class PythonIO:
         self.running = True
         self.bg_color = (0, 0, 0)
 
+        self.client = ClientInterface("127.0.0.1", 6969)
         self.player = Snake(self.window_size / 2, (0, 255, 0))
 
     def update(self, delta_time: float):
