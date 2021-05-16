@@ -1,4 +1,5 @@
 import socket
+import threading
 import pickle
 
 
@@ -11,6 +12,9 @@ class ClientInterface:
 
         self.incoming_msg_queue = []
         self.conn_closed = True
+
+        self.listen_thread = threading.Thread(target=self.listen, daemon=True)
+        self.listen_thread.start()
 
     def pop_first_msg(self):
         return self.incoming_msg_queue.pop(0)
