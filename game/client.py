@@ -12,7 +12,7 @@ class ClientInterface:
         self.socket.connect((host, port))
 
         self.incoming_msg_queue = []
-        self.conn_closed = True
+        self.conn_closed = False
 
         self.listen_thread = threading.Thread(target=self.listen, daemon=True)
         self.listen_thread.start()
@@ -29,14 +29,19 @@ class ClientInterface:
     def listen(self):
         buffer_size = 4096
         while not self.conn_closed:
-            incoming_msg = self.socket.recv(buffer_size)
+            try:
+                incoming_msg = self.socket.recv(buffer_size)
 
-            if incoming_msg:
-                decoded = pickle.loads(incoming_msg)
-                self.incoming_msg_queue.append(decoded)
-            else:
+                if incoming_msg:
+                    decoded = pickle.loads(incoming_msg)
+                    self.incoming_msg_queue.append(decoded)
+                else:
+                    self.conn_closed = True
+
+            except ConnectionResetError:
                 self.conn_closed = True
-                self.socket.close()
+
+        self.socket.close()
 
     def send(self, event):
         if not self.conn_closed:

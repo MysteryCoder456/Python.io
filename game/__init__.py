@@ -3,6 +3,7 @@ from pygame import Vector2 as vec2
 
 from game.client import ClientInterface
 from game.snake import Snake
+from game.network_events import *
 
 
 class PythonIO:
@@ -23,6 +24,13 @@ class PythonIO:
         self.player = Snake(self.window_size / 2, (0, 255, 0))
 
     def update(self, delta_time: float):
+        if not self.client.queue_empty():
+            msg = self.client.pop_first_msg()
+
+            if isinstance(msg, ConnectionAcceptEvent):
+                msg_register = RegisterWithServerEvent()
+                self.client.send(msg_register)
+
         pygame.display.set_caption(
             f"Python.io Remastered - {int(self.clock.get_fps())} FPS"
         )

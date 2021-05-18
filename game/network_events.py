@@ -1,5 +1,26 @@
 from pygame import Vector2 as vec2
-from snake import Snake
+from game.snake import Snake
+
+
+class ConnectionAcceptEvent:
+    def __init__(self):
+        pass
+
+
+class RegisterWithServerEvent:
+    def __init__(self):
+        pass
+
+
+class AssignIDEvent:
+    def __init__(self, uid: str):
+        self.id = uid
+
+
+class AddSnakeEvent:
+    def __init__(self, uid: str, snake: Snake):
+        self.id = uid
+        self.snake = snake
 
 
 class SnakeUpdateEvent:
