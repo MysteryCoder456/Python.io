@@ -8,8 +8,8 @@ class ConnectionAcceptEvent:
 
 
 class RegisterWithServerEvent:
-    def __init__(self):
-        pass
+    def __init__(self, snake: Snake):
+        self.snake = snake
 
 
 class AssignIDEvent:

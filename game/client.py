@@ -13,6 +13,7 @@ class ClientInterface:
 
         self.incoming_msg_queue = []
         self.conn_closed = False
+        self.id = ""
 
         self.listen_thread = threading.Thread(target=self.listen, daemon=True)
         self.listen_thread.start()

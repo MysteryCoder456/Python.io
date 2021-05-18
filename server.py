@@ -29,10 +29,11 @@ def send_raw(client: socket.socket, encoded: bytes):
         print("[CLIENT ERROR] Attempting to send data to an unregistered client.")
 
 
-def send_all(event):
+def send_all(event, ignore_client_uid: str = None):
     encoded = pickle.dumps(event)
-    for uid, client in clients:
-        send_raw(client, encoded)
+    for uid in clients:
+        if uid != ignore_client_uid:
+            send_raw(clients[uid], encoded)
 
 
 def listen(uid: str, client_socket: socket.socket):
@@ -44,20 +45,22 @@ def listen(uid: str, client_socket: socket.socket):
                 decoded = pickle.loads(incoming_msg)
 
                 if isinstance(decoded, RegisterWithServerEvent):
+                    # Add snake to internal roster
+                    snakes[uid] = decoded.snake
+
                     # Assign an ID to the client
                     msg_assign_id = AssignIDEvent(uid)
                     send(client_socket, msg_assign_id)
                     print(f"[CLIENT {uid}] Registered!")
 
-                elif isinstance(decoded, AddSnakeEvent):
-                    snakes[uid] = decoded.snake
+                    # Notify all players about new player
                     msg_add_snake = AddSnakeEvent(uid, decoded.snake)
                     send_all(msg_add_snake)
 
                 elif isinstance(decoded, SnakeUpdateEvent):
                     snakes[uid] = decoded.snake
                     msg_snake_update = SnakeUpdateEvent(uid, decoded.snake)
-                    send_all(msg_snake_update)
+                    send_all(msg_snake_update, uid)
             else:
                 break
 
